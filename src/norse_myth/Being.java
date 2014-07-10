@@ -88,10 +88,28 @@ public class Being {
 		return mergeBeingLists(getSiblingsMother(),getMother().getNumChildren(),getSiblingsFather(),getFather().getNumChildren());
 	}
 	
-	public Being[] mergeBeingLists(Being[] listOne, int listOneLength, Being[] listTwo, int listTwoLength)
+	public boolean equals(Being aBeing)
 	{
-		System.arraycopy(listTwo, 0, listOne, listOneLength, listTwoLength);
-		return listOne;
+		return (aBeing.getName() == getName());	
 	}
 	
+	public Being[] mergeBeingLists(Being[] listOne, int listOneLength, Being[] listTwo, int listTwoLength)
+	{
+		boolean addBeing = true;
+		Being[] list = new Being[20];
+		int elements = 0;
+		for (int i = 0; i < listOneLength; i++)
+			list[elements++] = listOne[i];
+		for (int i = 0; i < listTwoLength; i++)
+		{
+			addBeing = true;
+			for (int j = 0; j < listOneLength; j++)
+				if (listTwo[i].equals(listOne[j]))
+					addBeing = false;
+			if (addBeing)
+				list[elements++] = listTwo[i];
+		}
+		return list;
+	}
+		
 }

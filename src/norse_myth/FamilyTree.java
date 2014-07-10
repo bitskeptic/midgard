@@ -4,7 +4,7 @@ public class FamilyTree {
 
 	public static void main(String[] args) 
 	{	
-		Being[] being_list = new Being[10];
+		Being[] being_list = new Being[13];
 		Race[] race_list = new Race[10];
 		World[] world_list = new World[15];
 		
@@ -23,10 +23,13 @@ public class FamilyTree {
 		being_list[5] = new Being("Buri", Gender.MALE, race_list[1], null, null);
 		being_list[6] = new Being("Borr", Gender.MALE, race_list[1], being_list[5], null);
 		being_list[7] = new Being("Odin", Gender.MALE, race_list[0], being_list[6], being_list[4]);
-		being_list[8] = new Being("Frigga", Gender.FEMALE, race_list[0], null, null);
-		being_list[9] = new Being("Baldr", Gender.MALE, race_list[0], null, null);
+		being_list[8] = new Being("Vili", Gender.MALE, race_list[0], being_list[6], being_list[4]);
+		being_list[9] = new Being("Ve", Gender.MALE, race_list[0], being_list[6], being_list[4]);
+		being_list[10] = new Being("Hoenir", Gender.MALE, race_list[0], being_list[6], being_list[4]);
+		being_list[11] = new Being("Frigga", Gender.FEMALE, race_list[0], null, null);
+		being_list[12] = new Being("Baldr", Gender.MALE, race_list[0], null, null);
 		
-		System.out.println("Title: This is a list of all the gods and goddesses of the norse religion");
+		System.out.println("This is a list of all the gods and goddesses of the norse religion");
 		
 		for (Being b : being_list)
 		{
@@ -35,6 +38,10 @@ public class FamilyTree {
 				System.out.println(" Father: " + b.getFather().getName() + " Mother: " + b.getMother().getName());
 			else
 				System.out.println();
+		}
+		for (Being c : being_list[7].getSiblings())
+		{
+			System.out.println("Siblings of Odin: " + c.getName());
 		}
 	}
 }
