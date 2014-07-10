@@ -13,7 +13,7 @@ public class FamilyTree {
 		world_list[2] = new World("Vanaheimr");
 		race_list[0] = new Race("AEsir", world_list[0]);
 		race_list[1] = new Race("Jotun", world_list[1]);
-		race_list[2] = new Race("Vanir", world_list[2]);
+		race_list[3] = new Race("Vanir", world_list[2]);
 		
 		family_list[0] = new Being("Odin", Gender.MALE, race_list[0], null, null);
 		family_list[1] = new Being("Frigga", Gender.FEMALE, race_list[0], null, null);
