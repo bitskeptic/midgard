@@ -26,6 +26,8 @@ public class FamilyTree {
 		being_list[8] = new Being("Frigga", Gender.FEMALE, race_list[0], null, null);
 		being_list[9] = new Being("Baldr", Gender.MALE, race_list[0], null, null);
 		
+		System.out.println("This is a list of all the gods and goddesses of the norse religion");
+		
 		for (Being b : being_list)
 		{
 			System.out.print("Name: " + b.getName());
