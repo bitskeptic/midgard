@@ -3,9 +3,9 @@ package norse_myth;
 public class God extends Being {
 
 	private String godOf;
+	private String nameMeaning;
 	
-	public God(String aName, Gender aGender, Race aRace, Being aMother,
-			Being aFather, String aGodOf) {
+	public God(String aName, Gender aGender, Race aRace, Being aMother, Being aFather, String aGodOf) {
 		super(aName, aGender, aRace, aMother, aFather);
 		godOf = aGodOf;
 	}
@@ -15,6 +15,9 @@ public class God extends Being {
 		return godOf;
 	}
 	
-	
+	public String getNameMeaning()
+	{
+		return nameMeaning;
+	}
 
 }

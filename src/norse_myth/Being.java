@@ -1,8 +1,8 @@
 package norse_myth;
 
-public class Being {
+public class Being extends Thing implements First {
 	
-	private String name;
+	private int id;
 	private Gender gender;
 	private Race race;
 	private Being father;
@@ -10,23 +10,42 @@ public class Being {
 	private Being[] child_list = new Being[10];
 	private int num_children = 0;
 	private World home;
+	private int generation;
+	
+	private static int nextId = 0;
 	
 	public Being(String aName, Gender aGender, Race aRace, Being aMother, Being aFather)
 	{
-		name = aName;
+		super(aName);
+		id = nextId++;
 		gender = aGender;
 		race = aRace;
 		mother = aMother;
 		father = aFather;
+		generation = 0;
 		if (aMother != null)
+		{
 			aMother.addChild(this);
+			generation = aMother.getGeneration()+1;
+		}
 		if (aFather != null)
+		{
 			aFather.addChild(this);
+			if (aFather.getGeneration() > aMother.getGeneration())
+				generation = aFather.getGeneration()+1;
+		}
+		if (generation == 0)
+			generation = 1;
 	}
 	
-	public String getName()
+	public int getId()
 	{
-		return name;
+		return id;
+	}
+	
+	public static int getNextId()
+	{
+		return nextId;
 	}
 	
 	public Gender getGender()
@@ -49,7 +68,7 @@ public class Being {
 		if (num_children < 10)
 			child_list[num_children++] = child;
 		else
-			System.out.println("ERROR: Could not add child to Being[" + name + "]. They already have too many children");
+			System.out.println("ERROR: Could not add child to Being[" + getName() + "]. They already have too many children");
 			
 	}
 	
@@ -73,43 +92,30 @@ public class Being {
 		return num_children;
 	}
 	
+	public int getGeneration()
+	{
+		return generation;
+	}
+	
 	public Being[] getSiblingsFather()
 	{
-		return getFather().getChildren();
+		return (Being[]) removeFromList(getFather().getChildren(),this);
 	}
 	
 	public Being[] getSiblingsMother()
 	{
-		return getMother().getChildren();
+		return (Being[]) removeFromList(getMother().getChildren(),this);
 	}
 	
 	public Being[] getSiblings()
 	{
-		return mergeBeingLists(getSiblingsMother(),getMother().getNumChildren(),getSiblingsFather(),getFather().getNumChildren());
+		return (Being[]) mergeLists(getSiblingsMother(),getSiblingsFather());
 	}
 	
-	public boolean equals(Being aBeing)
+	public int isFirst(Object otherObject)
 	{
-		return (aBeing.getName() == getName());	
+		Being other = (Being) otherObject;
+		return (other.getGeneration()-generation);
 	}
 	
-	public Being[] mergeBeingLists(Being[] listOne, int listOneLength, Being[] listTwo, int listTwoLength)
-	{
-		boolean addBeing = true;
-		Being[] list = new Being[20];
-		int elements = 0;
-		for (int i = 0; i < listOneLength; i++)
-			list[elements++] = listOne[i];
-		for (int i = 0; i < listTwoLength; i++)
-		{
-			addBeing = true;
-			for (int j = 0; j < listOneLength; j++)
-				if (listTwo[i].equals(listOne[j]))
-					addBeing = false;
-			if (addBeing)
-				list[elements++] = listTwo[i];
-		}
-		return list;
-	}
-		
 }
