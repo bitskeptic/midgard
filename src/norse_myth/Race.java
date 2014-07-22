@@ -1,24 +1,24 @@
 package norse_myth;
 
-public class Race {
+public class Race extends Thing implements First {
 	
-	private String name;
 	private World home;
 	
 	public Race(String aName, World aHome)
 	{
-		name = aName;
+		super(aName);
 		home = aHome;
-	}
-	
-	public String getName()
-	{
-		return name;
 	}
 	
 	public World getWorld()
 	{
 		return home;
+	}
+	
+	public int isFirst(Object otherObject)
+	{
+		Race other = (Race) otherObject;
+		return (other.getWorld().getLevel()-home.getLevel());
 	}
 
 }

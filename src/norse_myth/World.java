@@ -1,17 +1,24 @@
 package norse_myth;
 
-public class World {
+public class World extends Thing implements First {
+
+	private int level;
 	
-	private String name;
-	
-	public World(String aName)
+	public World(String aName, int aLevel)
 	{
-		name = aName;
+		super(aName);
+		level = aLevel;
 	}
 	
-	public String getName()
+	public int getLevel()
 	{
-		return name;
+		return level;
+	}
+	
+	public int isFirst(Object otherObject)
+	{
+		World other = (World) otherObject;
+		return (other.getLevel()-level);
 	}
 
 }

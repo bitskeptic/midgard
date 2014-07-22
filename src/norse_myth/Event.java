@@ -1,13 +1,23 @@
 package norse_myth;
 
-public class Event {
+public class Event extends Thing {
 	
-	private String name;
 	private World location;
 	
-	public String getName()
+	public Event(String aName, World aLocation)
 	{
-		return name;
+		super(aName);
+		location = aLocation;
+	}
+	
+	public Event(String aName)
+	{
+		super(aName);
+	}
+	
+	public World getLocation()
+	{
+		return location;
 	}
 
 }
