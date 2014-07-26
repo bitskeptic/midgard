@@ -1,11 +1,12 @@
 package norse_myth;
 
+import java.io.*;
 import java.util.*;
 
 public class FamilyTree {
 
 	@SuppressWarnings("resource")
-	public static void main(String[] args) 
+	public static void main(String[] args) throws FileNotFoundException
 	{	
 		Being[] being_list = new Being[100];
 		Race[] race_list = new Race[10];
@@ -88,10 +89,16 @@ public class FamilyTree {
 					System.out.println();
 			}
 		}
+		
+		PrintWriter out = new PrintWriter("testfile.txt");
+		
 		for (Being c : being_list[7].getSiblings())
 		{
 			if (c != null)
-				System.out.println("Siblings of Odin: " + c.getName());
+				out.println("Siblings of Odin: " + c.getName());
 		}
+		
+		out.close();
+		
 	}
 }
