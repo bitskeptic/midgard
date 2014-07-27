@@ -1,5 +1,6 @@
 package norse_myth;
 
+
 public class Being extends Thing implements First, Cloneable {
 	
 	private int id;
