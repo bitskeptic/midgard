@@ -8,6 +8,7 @@ public class FamilyTree {
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws FileNotFoundException
 	{	
+		
 		Being[] being_list = new Being[100];
 		Race[] race_list = new Race[10];
 		World[] world_list = new World[15];

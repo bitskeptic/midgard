@@ -14,6 +14,7 @@ public abstract class Thing {
 		return name;
 	}
 	
+	
 	public boolean equals(Thing aThing)
 	{
 		return (aThing.getName() == getName());	
