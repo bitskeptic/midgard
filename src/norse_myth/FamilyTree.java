@@ -17,7 +17,7 @@ public class FamilyTree {
 		world_list[2] = new World("Vanaheimr",3);
 		race_list[0] = new Race("AEsir", world_list[0]);
 		race_list[1] = new Race("Jotun", world_list[1]);
-		race_list[3] = new Race("Vanir", world_list[2]);
+		race_list[2] = new Race("Vanir", world_list[2]);
 		
 		being_list[0] = new Being("Ymir", Gender.MALE, race_list[1], null, null);
 		being_list[1] = new Being("Thrudgelmir", Gender.MALE, race_list[1], being_list[0], null);
@@ -76,7 +76,7 @@ public class FamilyTree {
 		} while (new_being.equalsIgnoreCase("yes"));
 		
 		
-		System.out.println(new_being + "This is a list of all the gods and goddesses of the norse religion");
+		System.out.println(new_being + "\nThis is a list of all the gods and goddesses of the norse religion");
 		
 		for (Being b : being_list)
 		{
