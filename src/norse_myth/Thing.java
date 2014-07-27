@@ -75,5 +75,10 @@ public abstract class Thing {
 		for (i = 0; aList[i] != null; i++);
 		return i;
 	}
+	
+	public void setName(String aName)
+	{
+		name = aName;
+	}
 
 }
