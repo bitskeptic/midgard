@@ -14,6 +14,7 @@ public abstract class Thing {
 		return name;
 	}
 	
+	
 	public boolean equals(Thing aThing)
 	{
 		return (aThing.getName() == getName());	
@@ -75,5 +76,11 @@ public abstract class Thing {
 		for (i = 0; aList[i] != null; i++);
 		return i;
 	}
+	
+	public void setName(String aName)
+	{
+		name = aName;
+	}
+
 
 }

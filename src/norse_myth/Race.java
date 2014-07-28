@@ -19,6 +19,7 @@ public class Race extends Thing implements First {
 	{
 		Race other = (Race) otherObject;
 		return (other.getWorld().getLevel()-home.getLevel());
+		
 	}
 
 }

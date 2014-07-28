@@ -1,6 +1,7 @@
 package norse_myth;
 
-public class Being extends Thing implements First {
+
+public class Being extends Thing implements First, Cloneable {
 	
 	private int id;
 	private Gender gender;
@@ -116,6 +117,16 @@ public class Being extends Thing implements First {
 	{
 		Being other = (Being) otherObject;
 		return (other.getGeneration()-generation);
+	}
+	
+	public Being clone() throws CloneNotSupportedException
+	{
+		return (Being) super.clone();
+	}
+	
+	public void setName(String aName)
+	{
+		super.setName(aName);
 	}
 	
 }

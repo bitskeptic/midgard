@@ -1,13 +1,14 @@
 package norse_myth;
 
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 public class FamilyTree {
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws FileNotFoundException
 	{	
+		
 		Being[] being_list = new Being[100];
 		Race[] race_list = new Race[10];
 		World[] world_list = new World[15];
@@ -27,9 +28,23 @@ public class FamilyTree {
 		being_list[5] = new Being("Buri", Gender.MALE, race_list[1], null, null);
 		being_list[6] = new Being("Borr", Gender.MALE, race_list[1], being_list[5], null);
 		being_list[7] = new Being("Odin", Gender.MALE, race_list[0], being_list[6], being_list[4]);
-		being_list[8] = new Being("Vili", Gender.MALE, race_list[0], being_list[6], being_list[4]);
-		being_list[9] = new Being("Ve", Gender.MALE, race_list[0], being_list[6], being_list[4]);
-		being_list[10] = new Being("Hoenir", Gender.MALE, race_list[0], being_list[6], being_list[4]);
+		//being_list[8] = new Being("Vili", Gender.MALE, race_list[0], being_list[6], being_list[4]);
+		//being_list[9] = new Being("Ve", Gender.MALE, race_list[0], being_list[6], being_list[4]);
+		//being_list[10] = new Being("Hoenir", Gender.MALE, race_list[0], being_list[6], being_list[4]);
+		try
+		{
+			being_list[8] = being_list[7].clone();
+			being_list[8].setName("Vili");
+			being_list[9] = being_list[7].clone();
+			being_list[9].setName("Ve");
+			being_list[10] = being_list[7].clone();
+			being_list[10].setName("Hoenir");
+		}
+		catch (CloneNotSupportedException e)
+		{
+			e.printStackTrace();
+		}
+		
 		being_list[11] = new Being("Frigga", Gender.FEMALE, race_list[0], null, null);
 		being_list[12] = new Being("Baldr", Gender.MALE, race_list[0], null, null);
 		
