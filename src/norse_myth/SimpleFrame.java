@@ -25,8 +25,8 @@ public class SimpleFrame {
 @SuppressWarnings("serial")
 class SFrame extends JFrame
 {
-	private static final int DEFAULT_WIDTH = 600;
-	private static final int DEFAULT_HEIGHT = 200;
+	//private static final int DEFAULT_WIDTH = 600;
+	//private static final int DEFAULT_HEIGHT = 200;
 	
 	public SFrame()
 	{	
