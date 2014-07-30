@@ -23,7 +23,7 @@ public abstract class Thing {
 	public static Thing[] mergeLists(Thing[] listOne, Thing[] listTwo)
 	{
 		boolean addThing = true;
-		Thing[] list = new Thing[20];
+		Thing[] list = new Thing[listOne.length];
 		int elements = 0;
 		for (int i = 0; i < listOne.length; i++)
 			if (listOne[i] != null)
