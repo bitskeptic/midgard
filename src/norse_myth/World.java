@@ -19,7 +19,6 @@ public class World extends Thing implements First {
 	{
 		World other = (World) otherObject;
 		return (other.getLevel()-level);
-		
 	}
 
 }

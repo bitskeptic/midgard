@@ -4,8 +4,6 @@ public enum Gender implements First {
 	
 	MALE("M",1), FEMALE("F",2);
 	
-	
-	
 	private String abb;
 	private int first;
 	
