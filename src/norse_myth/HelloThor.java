@@ -3,8 +3,10 @@ package norse_myth;
 import java.awt.*;
 import java.awt.font.*;
 import java.awt.geom.*;
-
+import java.awt.event.*;
 import javax.swing.*;
+
+
 
 public class HelloThor {
 
@@ -27,8 +29,9 @@ class HelloThorComponent extends JComponent {
 
 	public static final int MESSAGE_X = 60;
 	public static final int MESSAGE_Y = 100;
-	public static final int DEFAULT_WIDTH = 300;
-	public static final int DEFAULT_HEIGHT = 200;
+	public static final int DEFAULT_WIDTH = 600;
+	public static final int DEFAULT_HEIGHT = 400;
+	private String message = "";
 	
 	public void paintComponent(Graphics g)
 	{
@@ -45,9 +48,12 @@ class HelloThorComponent extends JComponent {
 		Font serifItalic16 = new Font("Serif",Font.ITALIC,14);
 		g2.setFont(serifItalic16);
 		FontRenderContext context = g2.getFontRenderContext();
-		Rectangle2D bounds = serifItalic16.getStringBounds("Not a Hello, Thor program", context);
-		
-		g2.drawString("Not a Hello, Thor program", MESSAGE_X, MESSAGE_Y);
+		Rectangle2D bounds = serifItalic16.getStringBounds(message, context);
+		double x = (getWidth() - bounds.getWidth()) / 2;
+		double y = (getHeight() - bounds.getHeight()) / 2;
+		double ascent = -bounds.getY();
+		double baseY = y + ascent;
+		g2.drawString(message, (int) x,(int) baseY);
 		//setBackground(Color.GREEN);
 		
 		
@@ -58,12 +64,21 @@ class HelloThorComponent extends JComponent {
 	{
 		return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
+	
+	public void setMessage(String m)
+	{
+		message = m;
+	}
 
 }
 
 @SuppressWarnings("serial")
 class HelloThorFrame extends JFrame {
 
+	private JPanel buttonPanel;
+	private HelloThorComponent aComponent;
+	private JButton prev;
+	private JButton next;
 	public HelloThorFrame()
 	{
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -71,8 +86,37 @@ class HelloThorFrame extends JFrame {
 		int screenHeight = screenSize.height;
 		int screenWidth = screenSize.width;
 		setLocation(screenWidth / 3, screenHeight / 3);
-		add(new HelloThorComponent());
+		prev = new JButton("Previous");
+		next = new JButton("Next");
+		buttonPanel = new JPanel();
+		buttonPanel.add(prev);
+		buttonPanel.add(next);
+		//aComponent = new HelloThorComponent();
+		NameAction previousName = new NameAction("PREVIOUS");
+		NameAction nextName = new NameAction("NEXT");
+		prev.addActionListener(previousName);
+		next.addActionListener(nextName);
+		add(buttonPanel);
+		//add(aComponent);
 		pack();
+	}
+	
+	class NameAction implements ActionListener
+	{
+		private String message = "";
+		
+		public NameAction(String m)
+		{
+			message = m;
+		}
+		
+		public void actionPerformed(ActionEvent event)
+		{
+			prev.setText(message + "1");
+			next.setText(message + "2");
+			pack();
+		}
 	}
 
 }
+
