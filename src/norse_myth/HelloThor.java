@@ -92,26 +92,40 @@ class HelloThorFrame extends JFrame {
 		buttonPanel.add(prev);
 		buttonPanel.add(next);
 		//aComponent = new HelloThorComponent();
-		NameAction previousName = new NameAction("PREVIOUS");
-		NameAction nextName = new NameAction("NEXT");
+		NameAction previousName = new NameAction("PREVIOUS",Color.RED);
+		NameAction nextName = new NameAction("NEXT",Color.BLUE);
 		prev.addActionListener(previousName);
 		next.addActionListener(nextName);
+		InputMap imap = buttonPanel.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+		//imap.put(KeyStroke.getKeyStroke("ctrl Y"), "panel.yellow")
 		add(buttonPanel);
 		//add(aComponent);
+		addWindowListener(new WindowAdapter()
+			{
+				public void windowClosing(WindowEvent e)
+				{
+					System.exit(0);
+				}
+			});
 		pack();
 	}
 	
-	class NameAction implements ActionListener
+	class NameAction extends AbstractAction
 	{
 		private String message = "";
 		
-		public NameAction(String m)
+		public NameAction(String m, Color c)
 		{
 			message = m;
+			putValue(Action.NAME,message);
+			putValue("color", c);
+			putValue(Action.SHORT_DESCRIPTION,"This button is " + m + " for " + c);
 		}
 		
 		public void actionPerformed(ActionEvent event)
 		{
+			Color c = (Color) getValue("color");
+			buttonPanel.setBackground(c);
 			prev.setText(message + "1");
 			next.setText(message + "2");
 			pack();
