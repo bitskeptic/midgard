@@ -8,14 +8,14 @@ import javax.swing.*;
 
 
 
-public class HelloThor {
+public class HelloMidgard {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable()
 		{
 			public void run()
 			{
-				JFrame frame = new HelloThorFrame();
+				JFrame frame = new HelloMidgardFrame();
 				frame.setTitle("Hello Thor");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
@@ -25,7 +25,7 @@ public class HelloThor {
 }
 
 @SuppressWarnings("serial")
-class HelloThorComponent extends JComponent {
+class HelloMidgardComponent extends JComponent {
 
 	public static final int MESSAGE_X = 60;
 	public static final int MESSAGE_Y = 100;
@@ -73,13 +73,13 @@ class HelloThorComponent extends JComponent {
 }
 
 @SuppressWarnings("serial")
-class HelloThorFrame extends JFrame {
+class HelloMidgardFrame extends JFrame {
 
 	private JPanel buttonPanel;
-	private HelloThorComponent aComponent;
+	private HelloMidgardComponent aComponent;
 	private JButton prev;
 	private JButton next;
-	public HelloThorFrame()
+	public HelloMidgardFrame()
 	{
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
@@ -91,7 +91,7 @@ class HelloThorFrame extends JFrame {
 		buttonPanel = new JPanel();
 		buttonPanel.add(prev);
 		buttonPanel.add(next);
-		//aComponent = new HelloThorComponent();
+		//aComponent = new HelloMidgardComponent();
 		NameAction previousName = new NameAction("PREVIOUS",Color.RED);
 		NameAction nextName = new NameAction("NEXT",Color.BLUE);
 		prev.addActionListener(previousName);
