@@ -1,5 +1,7 @@
 package norse_myth;
 
+import java.util.*;
+
 public abstract class Thing {
 	
 	private String name;
@@ -17,69 +19,50 @@ public abstract class Thing {
 	
 	public boolean equals(Thing aThing)
 	{
-		return (aThing.getName() == getName());	
+		return (aThing.getName().equalsIgnoreCase(getName()));	
 	}
 	
-	public static Thing[] mergeLists(Thing[] listOne, Thing[] listTwo)
+	public static ArrayList<Thing> mergeLists(ArrayList<Thing> listOne, ArrayList<Thing> listTwo)
 	{
 		boolean addThing = true;
-		Thing[] list = new Thing[listOne.length];
-		int elements = 0;
-		for (int i = 0; i < listOne.length; i++)
-			if (listOne[i] != null)
-				list[elements++] = listOne[i];
-		for (int i = 0; i < listTwo.length; i++)
+		for (Thing xThing : listOne)
 		{
-			if (listTwo[i] != null)
-			{
-				addThing = true;
-				for (int j = 0; j < listOne.length; j++)
-					if (list[j] != null && listTwo[i].equals(list[j]))
-						addThing = false;
-				if (addThing)
-					listOne[elements++] = listTwo[i];
-			}
+			for (Thing yThing : listTwo)
+				if (xThing.equals(yThing))
+					addThing = false;
+			if (addThing)
+				listTwo.add(xThing);
 		}
-		return listOne;
+		
+		return listTwo;
 	}
 	
-	public static Thing[] removeFromList(Thing[] aThingList, Thing aThing)
+	public static ArrayList<Thing> removeFromList(ArrayList<Thing> aThingList, Thing aThing)
 	{
 		
-		int elements;
-		for (int i = 0; i < aThingList.length; i++)
-			if (aThingList[i] != null && aThingList[i].equals(aThing))
-			{
-				elements = Thing.getElementsInList(aThingList);
-				if (i == elements-1)
-					aThingList[i] = null;
-				else
-				{
-					aThingList[i] = aThingList[elements-1];
-					aThingList[elements-1] = null;
-				}
-			}
+		aThingList.remove(aThing);
+		
 		return aThingList;
 	}
 	
-	public static Thing lookup(String aName, Thing[] aList)
+	public static int getElementsInList(ArrayList<Thing> aList)
 	{
-		for (int i = 0; i < aList.length; i++)
-			if (aList[i] != null && aList[i].getName().equalsIgnoreCase(aName))
-				return aList[i];
-		return null;
-	}
-	
-	public static int getElementsInList(Thing[] aList)
-	{
-		int i;
-		for (i = 0; aList[i] != null; i++);
-		return i;
+		return aList.size();
 	}
 	
 	public void setName(String aName)
 	{
 		name = aName;
+	}
+	
+	public static Thing lookup(String aName, ArrayList<Thing> aList)
+	{
+		for (Thing currentThing : aList)
+		{
+			if (currentThing.getName().equalsIgnoreCase(aName))
+				return currentThing;
+		}
+		return null;
 	}
 
 

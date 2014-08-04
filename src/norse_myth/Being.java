@@ -1,5 +1,6 @@
 package norse_myth;
 
+import java.util.*;
 
 public class Being extends Thing implements First, Cloneable {
 	
@@ -8,7 +9,7 @@ public class Being extends Thing implements First, Cloneable {
 	private Race race;
 	private Being father;
 	private Being mother;
-	private Being[] child_list = new Being[10];
+	private ArrayList<Thing> child_list = new ArrayList<>();
 	private int num_children = 0;
 	private World home;
 	private int generation;
@@ -66,14 +67,9 @@ public class Being extends Thing implements First, Cloneable {
 	
 	public void addChild(Being child)
 	{
-		if (num_children < 10)
-			child_list[num_children++] = child;
-		else
-			System.out.println("ERROR: Could not add child to Being[" + getName() + "]. They already have too many children");
-			
+		child_list.add(child);
 	}
-	
-	public Being[] getChildren()
+	public ArrayList<Thing> getChildren()
 	{
 		return child_list;
 	}
@@ -98,19 +94,19 @@ public class Being extends Thing implements First, Cloneable {
 		return generation;
 	}
 	
-	public Being[] getSiblingsFather()
+	public ArrayList<Thing> getSiblingsFather()
 	{
-		return (Being[]) removeFromList(getFather().getChildren(),this);
+		return removeFromList(getFather().getChildren(),this);
 	}
 	
-	public Being[] getSiblingsMother()
+	public ArrayList<Thing> getSiblingsMother()
 	{
-		return (Being[]) removeFromList(getMother().getChildren(),this);
+		return removeFromList(getMother().getChildren(),this);
 	}
 	
-	public Being[] getSiblings()
+	public ArrayList<Thing> getSiblings()
 	{
-		return (Being[]) mergeLists(getSiblingsMother(),getSiblingsFather());
+		return mergeLists(getSiblingsMother(),getSiblingsFather());
 	}
 	
 	public int isFirst(Object otherObject)

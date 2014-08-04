@@ -29,6 +29,5 @@ public enum Gender implements First {
 		Gender other = (Gender) otherObject;
 		return (other.getFirst()-first);
 	}
-
 	
 }
