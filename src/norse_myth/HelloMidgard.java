@@ -5,8 +5,7 @@ import java.awt.font.*;
 import java.awt.geom.*;
 import java.awt.event.*;
 import javax.swing.*;
-
-
+import java.util.*;
 
 public class HelloMidgard {
 
@@ -16,7 +15,7 @@ public class HelloMidgard {
 			public void run()
 			{
 				JFrame frame = new HelloMidgardFrame();
-				frame.setTitle("Hello Thor");
+				frame.setTitle("Hello Midgard");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
 			}
@@ -73,10 +72,114 @@ class HelloMidgardComponent extends JComponent {
 }
 
 @SuppressWarnings("serial")
+class HelloMidgardCircles extends JComponent {
+	private static final int SIDELENGTH = 10;
+	private ArrayList<Ellipse2D> circles;
+	private Ellipse2D current;
+	
+	public HelloMidgardCircles()
+	{
+		circles = new ArrayList<>();
+		current = null;
+		
+		addMouseListener(new MouseHandler());
+		addMouseMotionListener(new MouseMotionHandler());
+		
+	}
+	
+	public void paintComponent(Graphics g)
+	{
+		Graphics2D g2 = (Graphics2D) g;
+		
+		for (Ellipse2D e : circles)
+		{
+			g2.draw(e);
+		}
+	}
+	
+	public Ellipse2D find(Point2D p)
+	{
+		for (Ellipse2D e : circles)
+		{
+			if (e.contains(p))
+				return e;
+		}
+		return null;
+	}
+	
+	public void add(Point2D p)
+	{
+		double x = p.getX();
+		double y = p.getY();
+		
+		current = new Ellipse2D.Double(x - (SIDELENGTH / 2), y - (SIDELENGTH / 2), SIDELENGTH, SIDELENGTH);
+		circles.add(current);
+		repaint();
+	}
+	
+	public void remove(Ellipse2D s)
+	{
+		if (s == null)
+			return;
+		if (s == current)
+			current = null;
+		circles.remove(s);
+		repaint();
+	}
+	
+	private class MouseHandler extends MouseAdapter
+	{
+		public void mousePressed(MouseEvent event)
+		{
+			Point2D origin = event.getPoint();
+			current = find(origin);
+			if (current == null)
+				add(origin);
+		}
+		public void mouseClicked(MouseEvent event)
+		{
+			current = find(event.getPoint());
+			if (current != null && event.getClickCount() >= 2)
+				remove(current);
+		}
+	}
+	
+	private class MouseMotionHandler implements MouseMotionListener
+	{
+		public void mouseMoved(MouseEvent event)
+		{
+			if (find(event.getPoint()) == null)
+				setCursor(Cursor.getDefaultCursor());
+			else
+				setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+		}
+		
+		public void mouseDragged(MouseEvent event)
+		{
+			if (current != null)
+			{
+				double x = event.getX();
+				double y = event.getY();
+				double currentx = current.getCenterX();
+				double currenty = current.getCenterY();
+				// drag the current rectangle to center it at (x, y)
+				current.setFrameFromCenter(currentx, currenty, x, y);
+				repaint();
+			}
+		}
+	}
+	
+	public Dimension getPreferredSize()
+	{
+		return new Dimension(300, 200);
+	}
+}
+
+@SuppressWarnings("serial")
 class HelloMidgardFrame extends JFrame {
 
 	private JPanel buttonPanel;
-	private HelloMidgardComponent aComponent;
+	//private HelloMidgardComponent aComponent;
 	private JButton prev;
 	private JButton next;
 	public HelloMidgardFrame()
@@ -97,8 +200,14 @@ class HelloMidgardFrame extends JFrame {
 		prev.addActionListener(previousName);
 		next.addActionListener(nextName);
 		InputMap imap = buttonPanel.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-		//imap.put(KeyStroke.getKeyStroke("ctrl Y"), "panel.yellow")
-		add(buttonPanel);
+		imap.put(KeyStroke.getKeyStroke("ctrl B"), "panel.blue");
+		imap.put(KeyStroke.getKeyStroke("ctrl R"), "panel.red");
+		ActionMap amap = buttonPanel.getActionMap();
+		amap.put("panel.blue", nextName);
+		amap.put("panel.red", previousName);
+		HelloMidgardCircles aCircles = new HelloMidgardCircles();
+		add(aCircles);
+		//add(buttonPanel);
 		//add(aComponent);
 		addWindowListener(new WindowAdapter()
 			{
@@ -131,6 +240,5 @@ class HelloMidgardFrame extends JFrame {
 			pack();
 		}
 	}
-
 }
 
