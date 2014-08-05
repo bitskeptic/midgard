@@ -23,6 +23,8 @@ public class HelloMidgard {
 	}
 }
 
+
+
 @SuppressWarnings("serial")
 class HelloMidgardComponent extends JComponent {
 
@@ -53,10 +55,7 @@ class HelloMidgardComponent extends JComponent {
 		double ascent = -bounds.getY();
 		double baseY = y + ascent;
 		g2.drawString(message, (int) x,(int) baseY);
-		//setBackground(Color.GREEN);
-		
-		
-		
+		setBackground(Color.GREEN);
 	}
 	
 	public Dimension getPreferredSize()
@@ -91,9 +90,11 @@ class HelloMidgardCircles extends JComponent {
 	{
 		Graphics2D g2 = (Graphics2D) g;
 		
+		
 		for (Ellipse2D e : circles)
 		{
-			g2.draw(e);
+			g2.setPaint(Color.getHSBColor((float) e.getCenterX(),(float) e.getCenterY(),(float) e.getCenterX()));
+			g2.fill(e);
 		}
 	}
 	
@@ -179,9 +180,11 @@ class HelloMidgardCircles extends JComponent {
 class HelloMidgardFrame extends JFrame {
 
 	private JPanel buttonPanel;
-	//private HelloMidgardComponent aComponent;
+	private HelloMidgardComponent aComponent;
 	private JButton prev;
 	private JButton next;
+	private JPanel panel;
+	
 	public HelloMidgardFrame()
 	{
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -194,7 +197,7 @@ class HelloMidgardFrame extends JFrame {
 		buttonPanel = new JPanel();
 		buttonPanel.add(prev);
 		buttonPanel.add(next);
-		//aComponent = new HelloMidgardComponent();
+		aComponent = new HelloMidgardComponent();
 		NameAction previousName = new NameAction("PREVIOUS",Color.RED);
 		NameAction nextName = new NameAction("NEXT",Color.BLUE);
 		prev.addActionListener(previousName);
@@ -206,9 +209,20 @@ class HelloMidgardFrame extends JFrame {
 		amap.put("panel.blue", nextName);
 		amap.put("panel.red", previousName);
 		HelloMidgardCircles aCircles = new HelloMidgardCircles();
-		add(aCircles);
-		//add(buttonPanel);
-		//add(aComponent);
+		panel = new JPanel();
+		panel.setLayout(new GridLayout(4,4));
+		for (int i = 0; i < 16; i++)
+		{
+			String intString = Integer.toString(i);
+			JButton b = new JButton(intString);
+			NameAction nAction = new NameAction(intString,Color.getHSBColor((float) i, (float) i/15, (float) i/15));
+			b.addActionListener(nAction);
+			panel.add(b);
+		}
+		add(aCircles,BorderLayout.CENTER);
+		add(buttonPanel,BorderLayout.SOUTH);
+		add(aComponent,BorderLayout.NORTH);
+		add(panel,BorderLayout.EAST);
 		addWindowListener(new WindowAdapter()
 			{
 				public void windowClosing(WindowEvent e)
@@ -235,6 +249,8 @@ class HelloMidgardFrame extends JFrame {
 		{
 			Color c = (Color) getValue("color");
 			buttonPanel.setBackground(c);
+			aComponent.setBackground(c);
+			aComponent.setMessage(message);
 			prev.setText(message + "1");
 			next.setText(message + "2");
 			pack();
